@@ -1,4 +1,4 @@
-# city-info-api
+# service_wiki
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/EgorTroyan/city-info-api.git
+git remote add origin https://gitlab.com/digital-devices-for-dh-19/service_wiki.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.com/EgorTroyan/city-info-api/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.com/digital-devices-for-dh-19/service_wiki/-/settings/integrations)
 
 ## Collaborate with your team
 
