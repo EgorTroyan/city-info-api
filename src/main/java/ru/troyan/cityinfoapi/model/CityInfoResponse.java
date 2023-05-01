@@ -1,19 +1,17 @@
 package ru.troyan.cityinfoapi.model;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
-import java.net.URL;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 //@NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
 public class CityInfoResponse {
 
-    String id;
-    String text;
+    private String extract;
+    private String phrase;
 }

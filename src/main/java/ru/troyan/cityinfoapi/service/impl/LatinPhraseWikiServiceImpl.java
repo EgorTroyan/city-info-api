@@ -26,9 +26,7 @@ public class LatinPhraseWikiServiceImpl implements LatinPhraseService {
         while (elementsOfRandomElement == null || elementsOfRandomElement.size() != 3) {
             elementsOfRandomElement = getElementsOfRandomLatinPhrase(elements);
         }
-        String message = String.format("Your information not found. \nBut! Did you know, that \"%s\" in Latin means -  \"%s\"",
-                elementsOfRandomElement.get(0).wholeText(),
-                elementsOfRandomElement.get(1).wholeText());
+        String message = "Did you know, that " + elementsOfRandomElement.get(0).wholeText() + " in Latin means - " + elementsOfRandomElement.get(1).wholeText();
         System.out.println(message);
         return message;
     }

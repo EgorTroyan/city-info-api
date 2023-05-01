@@ -12,6 +12,6 @@ class LatinPhraseWikiServiceImplTest {
 
     @Test
     void getRandomLatinPhrase() throws IOException {
-        System.out.println(service.getRandomLatinPhrase());
+        assertTrue(service.getRandomLatinPhrase().contains("Did you know"));
     }
 }
