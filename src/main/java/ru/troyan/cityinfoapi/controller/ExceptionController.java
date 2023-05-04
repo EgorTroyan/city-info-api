@@ -40,13 +40,9 @@ public class ExceptionController {
         return new ErrorResponse(exception.getMessage(), latinPhraseService.getRandomLatinPhrase());
     }
 
-    @ExceptionHandler(IOException.class)
-    public void IOError() {
-        throw new RuntimeException();
-    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler({RuntimeException.class, Exception.class})
     public ErrorResponse error(RuntimeException exception) {
         log.error("", exception);
         return new ErrorResponse("Информация о городе оказалась слишком интересной. " +

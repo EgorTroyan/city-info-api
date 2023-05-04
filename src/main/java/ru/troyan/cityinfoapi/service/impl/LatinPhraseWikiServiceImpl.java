@@ -14,7 +14,7 @@ import java.util.Random;
 public class LatinPhraseWikiServiceImpl implements LatinPhraseService {
 
     private static final String WIKI_LATIN_PHRASES_LINK = "https://en.m.wikipedia.org/wiki/List_of_Latin_phrases_(full)";
-
+    private final Random random = new Random();
     @Override
     public String getRandomLatinPhrase() throws IOException {
         Document doc = Jsoup.connect(WIKI_LATIN_PHRASES_LINK)
@@ -26,13 +26,11 @@ public class LatinPhraseWikiServiceImpl implements LatinPhraseService {
         while (elementsOfRandomElement == null || elementsOfRandomElement.size() != 3) {
             elementsOfRandomElement = getElementsOfRandomLatinPhrase(elements);
         }
-        String message = "Did you know, that " + elementsOfRandomElement.get(0).wholeText() + " in Latin means - " + elementsOfRandomElement.get(1).wholeText();
-        System.out.println(message);
-        return message;
+        return "Did you know, that " + elementsOfRandomElement.get(0).wholeText() + " in Latin means - " + elementsOfRandomElement.get(1).wholeText();
     }
 
     private Elements getElementsOfRandomLatinPhrase(Elements fullTable) {
-        Element randomElement = fullTable.get(new Random().nextInt(fullTable.size()));
+        Element randomElement = fullTable.get(random.nextInt(fullTable.size()));
         return randomElement.select("td");
     }
 }

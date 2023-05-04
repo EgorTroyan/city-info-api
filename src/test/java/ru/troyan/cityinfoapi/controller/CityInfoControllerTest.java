@@ -3,6 +3,8 @@ package ru.troyan.cityinfoapi.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class CityInfoControllerTest {
+class CityInfoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,33 +36,18 @@ public class CityInfoControllerTest {
         Assertions.assertTrue(response.getPhrase().contains("Did you know"));
     }
 
-    @Test
-    void getCityInfoWithWrongCoordinates() throws Exception {
-        MvcResult result = mockMvc.perform(get("/city-info?city=Moscow&country=Russia&latitude=55.1&longitude=39.2"))
-                .andExpect(status().is(404))
+    @ParameterizedTest
+    @CsvSource({
+            "/city-info?city=Moscow&country=Russia&latitude=55.1&longitude=39.2, do not correspond, 404",
+            "/city-info?city=Moscow&country=Russia&latitude=155.1&longitude=39.2, Invalid data, 400",
+            "/city-info?city=Moscow&country=Russia&longitude=39.2, Required request parameter, 400",
+    })
+    void getCityInfoWithWrongParameters(String path, String responseMessage, int code) throws Exception {
+        MvcResult result = mockMvc.perform(get(path))
+                .andExpect(status().is(code))
                 .andReturn();
         ErrorResponse response = objectMapper.readValue(result.getResponse().getContentAsString(), ErrorResponse.class);
-        Assertions.assertTrue(response.getMessage().contains("do not correspond"));
-        Assertions.assertTrue(response.getPhrase().contains("Did you know"));
-    }
-
-    @Test
-    void getCityInfoWithWrongCoordinatesRange() throws Exception {
-        MvcResult result = mockMvc.perform(get("/city-info?city=Moscow&country=Russia&latitude=155.1&longitude=39.2"))
-                .andExpect(status().is(400))
-                .andReturn();
-        ErrorResponse response = objectMapper.readValue(result.getResponse().getContentAsString(), ErrorResponse.class);
-        Assertions.assertTrue(response.getMessage().contains("Invalid data"));
-        Assertions.assertTrue(response.getPhrase().contains("Did you know"));
-    }
-
-    @Test
-    void getCityInfoWithEmptyOneOfParametr() throws Exception {
-        MvcResult result = mockMvc.perform(get("/city-info?city=Moscow&country=Russia&longitude=39.2"))
-                .andExpect(status().is(400))
-                .andReturn();
-        ErrorResponse response = objectMapper.readValue(result.getResponse().getContentAsString(), ErrorResponse.class);
-        Assertions.assertTrue(response.getMessage().contains("Required request parameter"));
+        Assertions.assertTrue(response.getMessage().contains(responseMessage));
         Assertions.assertTrue(response.getPhrase().contains("Did you know"));
     }
 }
