@@ -1,92 +1,107 @@
-# service_wiki
+## get_wiki_city
+### Назначение
+Метод предназначен для получения первого абзаца о городе в Википедии.Происходит поиск статьи и сравнение данных статьи с доступными координатами пользователя. Если статья верна, то пользователь увидит первый абзац о своем городе из Википедии на английском языке и латинскую цитату дня. Если такой статьи нет, то он увидит цитату дня на латинском языке.
 
+### Входные параметры
+| Название параметра | Тип параметра | Тип данных | Обязательность | Описание                                     | Варианты значений |
+|--------------------| ---| ---| --- |----------------------------------------------|-------------------|
+| city               | Query | string | Да | Город, для которого запрашивается информация | -                 |
+| country            | Query | string | Да | Страна, для которой запрашивается информация | -                 |
+| latitude           | Query | string | Да     | Широта, в десятичном формате                 | [90,-90]          |                                             |   |
+| longitude          | Query | string | Да     | Долгота, в десятичном формате                | [180,-180]        |                                             |   |
 
+#### Пример запроса
+GET /wikilocation?city=Astrakhan&country=Russia&latitude=60.282729&longitude=69.420228
 
-## Getting started
+### Описание выходных параметров
+В случае успешного выполнения запроса будет возвращенен JSON, содержащеий текст первого абзаца страницы в Википедии для выбранного города в теле ответа со статусом 200 ОК. Если возникли ошибки при выполнении запроса, будет возвращен код ошибки 404 и JSON c полем message- описанием проблемы и полем phrase- содержащим случайную фразу
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### Выходные параметры
+| Название параметра | Тип данных | Обязательность | Описание                                              | Варианты значений |
+|--------------------|------------| --- |-------------------------------------------------------| --- |
+| extract          | String     | Да | Текст первого абзаца про выбранный город из Википедии | - |
+| phrase                   | String           | Да   | Случайная латинская фраза                             |   |
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+#### Пример успешного ответа
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/digital-devices-for-dh-19/service_wiki.git
-git branch -M main
-git push -uf origin main
+200 Ok
+{
+    "extract": "... Этот город самый лучший город на земле (На месте ... может быть ваш любимый город)"
+    "phrase": "Quod licet Jovi, non licet bovi"
+},
 ```
 
-## Integrate with your tools
+#### Пример неудачного ответа
+```
+404 Not Found
+{
+    "message": "Страница не найдена"
+    "phrase": "Festina lente"
+}
+```
 
-- [ ] [Set up project integrations](https://gitlab.com/digital-devices-for-dh-19/service_wiki/-/settings/integrations)
 
-## Collaborate with your team
+[//]: # ()
+[//]: # (### Шаг 1.)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+[//]: # (Получение ссылки на Википедию.)
 
-## Test and Deploy
+[//]: # ()
+[//]: # (### Входные параметры)
 
-Use the built-in continuous integration in GitLab.
+[//]: # (| Название параметра | Тип параметра | Тип данных | Обязательность | Описание | Варианты значений |)
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+[//]: # (| --- | ---| ---| --- | --- | --- |)
 
-***
+[//]: # (| city | Query | string | Да | Город, для которого запрашивается информация | - |)
 
-# Editing this README
+[//]: # (| country | Query | string | Да | Страна, для которой запрашивается информация| - |)
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+[//]: # ()
+[//]: # (#### Пример запроса)
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+[//]: # (GET /wikilocation?city=Astrakhan&country=Russia)
 
-## Name
-Choose a self-explaining name for your project.
+[//]: # ()
+[//]: # (### Описание выходных параметров)
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+[//]: # (В случае успешного выполнения запроса будет возвращенен id страницы в Википедии для выбранного города в теле ответа со статусом 200 ОК. Если возникли ошибки при выполнении запроса, будет возвращен соответствующий код ошибки с описанием проблемы и после этого переходим к шагу 5.)
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+[//]: # ()
+[//]: # (### Выходные параметры)
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+[//]: # (| Название параметра | Тип данных | Обязательность | Описание | Варианты значений |)
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+[//]: # (| --- |--- | --- | --- | --- |)
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+[//]: # (| page_id | integer | Да | Id страницы выбранного города из Википедии | - |)
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+[//]: # ()
+[//]: # (#### Пример успешного ответа)
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+[//]: # (```javascript)
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+[//]: # (200 Ok)
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+[//]: # ({)
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+[//]: # (    "page_id": 20673)
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+[//]: # (},)
 
-## License
-For open source projects, say how it is licensed.
+[//]: # (```)
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+[//]: # ()
+[//]: # (#### Пример неудачного ответа)
+
+[//]: # (```javascript)
+
+[//]: # (404 Not Found)
+
+[//]: # ({)
+
+[//]: # (    "message": "Страница не найдена")
+
+[//]: # (})
+
+[//]: # (```)
