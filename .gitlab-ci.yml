@@ -3,7 +3,7 @@ stages:          # List of stages for jobs, and their order of execution
   - test
   - deploy
 
-#before_script:
+before_script:
 #  - echo "Before script section"
 #  - java -version
 #  - mvn –version
