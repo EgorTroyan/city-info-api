@@ -3,17 +3,20 @@ stages:          # List of stages for jobs, and their order of execution
   - test
   - deploy
 
-before_script:
-  - echo "Before script section"
-  - java -version
-  - mvn –version
-  - docker --version
+#before_script:
+#  - echo "Before script section"
+#  - java -version
+#  - mvn –version
+#  - docker --version
 #  - apt-get update && apt-get -y install openjdk-8-jdk  && apt-get -y install maven && apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-#build-job:       # This job runs in the build stage, which runs first.
-#  stage: build
-#  script:
-#    - echo "Compiling the code..."
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - echo "Compiling the code..."
+    - java -version
+    - mvn –version
+    - docker --version
 #    - mvn package -Dmaven.test.skip
 #    - echo "Compile complete."
 #    - uname -a
